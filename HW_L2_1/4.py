@@ -9,7 +9,19 @@ class OutOfRange(Exception):
     def __str__(self):
         return f"{self.value} out of {self.range}!!"
     
-    
+def grade(score):
+    grade: str
+    if score >= 18:
+        grade = "A"
+    elif score >= 15:
+        grade = "B"
+    elif score >= 12:
+        grade = "C"
+    else:
+        grade = "F"
+        
+    return grade
+       
 while True:    
     try:
         courses_number = int(input("please enter number of courses: "))
@@ -22,18 +34,20 @@ while True:
     else:
         break  
     
-grades = []
+scores = []
 while courses_number:
     try:
-        grade = float(input(f"please enter {len(grades) + 1}th grade,must be in (0,20):"))
-        if not (0 <= grade <= 20):
-            raise OutOfRange(grade,(0,20))
+        score = float(input(f"please enter {len(scores) + 1}th grade,must be in (0,20):"))
+        if not (0 <= score <= 20):
+            raise OutOfRange(score,(0,20))
     except ValueError:
         print("grade must be float!!")
     except OutOfRange as e:
         print(e)
     else:
-        grades.append(grade)
+        scores.append(score)
         courses_number -= 1 
         
-av
+average = sum(scores) / len(scores)
+
+print(grade(average))
