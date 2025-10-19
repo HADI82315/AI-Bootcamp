@@ -54,5 +54,4 @@ while courses_number:
         courses_number -= 1 
         
 average = sum(scores) / len(scores)
-
 print(grade(average))
