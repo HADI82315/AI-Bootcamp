@@ -8,8 +8,7 @@ class OutOfRange(Exception):
 
 while (1):
     try:
-        #if user accidentally entered space in between
-        user_input = int(input("please enter an integer greater than 3: ").replace(' ', ''))
+        user_input = int(input("please enter an integer greater than 3: "))
         if user_input < 3:
             raise OutOfRange(user_input)
     except ValueError:
