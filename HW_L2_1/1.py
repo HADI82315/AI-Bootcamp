@@ -1,14 +1,24 @@
+class OutOfRange(Exception):
+    def __init__(self, value, *args):
+        super().__init__( *args)
+        self.value = value
+
+    def __str__(self):
+        return f"{self.value} is less than 3 and is invalid,please try agian"
+
 while (1):
-    #if user accidentally entered space in between
-    user_input = input("please enter an integer greater than 3: ").replace(' ', '')
- 
-    if user_input.isdigit():
-        if (user_input := int(user_input)) > 3:
-            break
-        else:
-            print("out of range number")
+    try:
+        #if user accidentally entered space in between
+        user_input = int(input("please enter an integer greater than 3: ").replace(' ', ''))
+        if user_input < 3:
+            raise OutOfRange(user_input)
+    except ValueError:
+        print("input must be integer only,please try again")
+    except OutOfRange as e:
+        print(e)
     else:
-        print("invalid input")
+        break
+        
 
 numbers = range(1,user_input + 1)
 if user_input % 2:
