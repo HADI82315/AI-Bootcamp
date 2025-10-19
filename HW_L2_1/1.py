@@ -5,7 +5,7 @@ class OutOfRange(Exception):
         self.range = range
 
     def __str__(self):
-        return f"{self.value} out of {self.range},please try agian."
+        return f"{self.value} out of {self.range}!!."
 
 while (1):
     try:
@@ -13,7 +13,7 @@ while (1):
         if user_input < 3:
             raise OutOfRange(user_input,range=(3,))
     except ValueError:
-        print("input must be integer only,please try again")
+        print("input must be integer only!!")
     except OutOfRange as e:
         print(e)
     else:

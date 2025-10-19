@@ -1,3 +1,4 @@
+import time
 
 #this class could've been imoported but file name(1.py) prevented us
 class OutOfRange(Exception):
@@ -31,6 +32,8 @@ while True:
         print("number of courses must be integer!!")
     except OutOfRange as e:
         print(e)
+        time.sleep(1)
+        exit()
     else:
         break  
     
@@ -43,7 +46,9 @@ while courses_number:
     except ValueError:
         print("grade must be float!!")
     except OutOfRange as e:
-        print(e)
+        print("Invalid Grade.", e)
+        time.sleep(1)
+        exit()
     else:
         scores.append(score)
         courses_number -= 1 
