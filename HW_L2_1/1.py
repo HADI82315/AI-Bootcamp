@@ -25,3 +25,4 @@ if user_input % 2:
     print(*numbers[::2],sep=' ,')
 else:
     print(*numbers[1::2],sep=' ,')
+    

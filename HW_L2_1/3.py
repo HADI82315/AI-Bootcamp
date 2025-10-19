@@ -16,6 +16,4 @@ while words:
     result[key] = value
 
 print(result)
-    
-            
-            
+          
