@@ -29,8 +29,8 @@ def get_or_create_user(name):
             if not re.match(pattern, input_movies):
                 print("Please enter 2 or 3 movies separated by commas.")
                 continue
-            movies = [movie.strip() for movie in input_movies.split(',')]
-            movies_number = len(set(movie.lower() for movie in movies))
+            movies = [movie.strip().title() for movie in input_movies.split(',')]
+            movies_number = len(set(movies))
             if not (1 < movies_number < 4):
                 print("Please enter 2 or 3 unique movies only.")
                 continue
@@ -46,12 +46,12 @@ def find_best_match(name, users):
         common_numbers[user] = similarity(name, user)
         
     common_numbers = dict(sorted(common_numbers.items(), reverse=True))
-    max = -1
+    max = 0
+    best_match = None
     for user, score in common_numbers.items():
         if score > max:
             max = score
             best_match = user
-        
     return best_match
         
 def similarity(user_a, user_b):
@@ -60,9 +60,22 @@ def similarity(user_a, user_b):
     common_movies = movies_a.intersection(movies_b)
     return len(common_movies)
 
+def recommend_for(name, best_match_user):
+    movies = set(users[best_match_user])
+    user_movies = set(users[name])
+    recommendations = movies - user_movies
+    return list(recommendations).sort(reverse=True)
+
 users = load_users()
 name = input("Enter your name: ").strip()
 get_or_create_user(name)
 best_match_user = find_best_match(name, users)
-print(f"Your best match is: {best_match_user}")
-save_users(users)
+if not best_match_user:
+    print("No matches found.")
+    exit()
+recommendation = recommend_for(name, best_match_user) 
+if not recommendation:
+    print("No recommendations available.")
+    exit()  
+print(f"Your best match is: {best_match_user} and your recommendation is: {recommendation[0]}")
+#save_users(users)
