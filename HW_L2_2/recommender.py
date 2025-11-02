@@ -52,7 +52,7 @@ def find_best_match(name, users):
         if score > max:
             max = score
             best_match = user
-    return best_match
+    return best_match, max
         
 def similarity(user_a, user_b):
     movies_a = set(users[user_a])
@@ -61,21 +61,22 @@ def similarity(user_a, user_b):
     return len(common_movies)
 
 def recommend_for(name, best_match_user):
-    movies = set(users[best_match_user])
+    best_movies = set(users[best_match_user])
     user_movies = set(users[name])
-    recommendations = movies - user_movies
-    return list(recommendations).sort(reverse=True)
+    recommendations = best_movies - user_movies
+    return sorted(list(recommendations), reverse=True)
 
 users = load_users()
-name = input("Enter your name: ").strip()
+print("Welcome to the Movie Recommender!")
+name = input("Enter your name: ").strip().title()
 get_or_create_user(name)
-best_match_user = find_best_match(name, users)
+best_match_user, score = find_best_match(name, users)
 if not best_match_user:
     print("No matches found.")
     exit()
-recommendation = recommend_for(name, best_match_user) 
+recommendation = recommend_for(name, best_match_user)
 if not recommendation:
     print("No recommendations available.")
     exit()  
-print(f"Your best match is: {best_match_user} and your recommendation is: {recommendation[0]}")
-#save_users(users)
+print(f"You have {score} common movies with {best_match_user}. We recommend you to see: {recommendation[0]}")
+save_users(users)
