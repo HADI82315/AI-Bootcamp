@@ -80,3 +80,31 @@ class Analyzer(PipelineStep):
         statistics["unique_words"] = len(set(words))
         
         return statistics
+    
+class ReportGenerator: 
+    """ 
+    Generates and outputs reports from the analysis statistics. 
+    """ 
+    def print_to_console(self, stats: dict): 
+        """ 
+        Prints the statistics in a formatted way to the console. 
+        """ 
+        for key,value in stats.items():
+            if isinstance(value,float):
+                print(f"{key}: {value:.2f}")
+            else:
+                print(f"{key}: {value}")
+ 
+    def save_to_file(self, stats: dict, filepath: str): 
+        """ 
+        Saves the statistics in a formatted way to a text file. 
+        """ 
+        try:
+            with open(filepath, mode="w") as file:
+                for key,value in stats.items():
+                    if isinstance(value,float):
+                        file.write(f"{key}: {value:.2f}\n")
+                    else:
+                        print(f"{key}: {value}\n")
+        except Exception as e:
+            print(f"Unexpected error: {e}")
