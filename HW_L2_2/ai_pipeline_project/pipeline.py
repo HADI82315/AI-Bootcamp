@@ -56,7 +56,7 @@ class Preprocessor(PipelineStep):
         """ 
         try:
             cleaned = [re.sub(r"\s{2,}"," ",self.punctuation_pattern.sub(" ",line.strip().lower())) for line in data]
-            return [line for line in cleaned if line.strip()]
+            return [line.strip() for line in cleaned if line.strip()]
         except Exception as e:
             print(f"Unexpected error: {e}")
             exit()
@@ -79,7 +79,6 @@ class Analyzer(PipelineStep):
             print("empty file")
             exit()
             
-        print(set(words))
         statistics["unique_words"] = len(set(words))
         
         return statistics
