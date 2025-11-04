@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod 
 from typing import Any, List 
+import re
  
 class PipelineStep(ABC): 
     """ 
@@ -39,3 +40,19 @@ class DataLoader(PipelineStep):
             return [line.strip() for line in self.lines]
         
         exit()
+        
+class Preprocessor(PipelineStep): 
+    """ 
+    Cleans a list of text strings by converting to lowercase, removing 
+    punctuation, 
+    and stripping extra whitespace. 
+    """ 
+    def __init__(self, punctuation_to_remove: str = r'[^\w\s]'): 
+        self.punctuation_pattern = re.compile(punctuation_to_remove) 
+ 
+    def process(self, data: List[str]) -> List[str]: 
+        """ 
+        Applies cleaning steps to each string in the input list. 
+        """ 
+        return [re.sub(r"\s{2,}"," ",self.punctuation_pattern.sub("",line.strip().lower())) for line in data]
+        
