@@ -108,3 +108,20 @@ class ReportGenerator:
                         print(f"{key}: {value}\n")
         except Exception as e:
             print(f"Unexpected error: {e}")
+            
+class AIPipeline: 
+    """ 
+    Orchestrates a series of pipeline steps to process data. 
+    """ 
+ 
+    def __init__(self, *steps: PipelineStep): 
+        self.steps = steps 
+ 
+    def run(self, initial_input: Any) -> Any: 
+        """ 
+        Executes all steps in the pipeline sequentially. 
+        """ 
+        process_input = initial_input
+        for step in self.steps:
+            process_input = step.process(process_input)
+        return process_input
