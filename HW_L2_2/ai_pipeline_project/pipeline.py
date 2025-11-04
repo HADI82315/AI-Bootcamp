@@ -105,7 +105,7 @@ class ReportGenerator:
                     if isinstance(value,float):
                         file.write(f"{key}: {value:.2f}\n")
                     else:
-                        print(f"{key}: {value}\n")
+                        file.write(f"{key}: {value}\n")
         except Exception as e:
             print(f"Unexpected error: {e}")
             
