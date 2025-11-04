@@ -1,0 +1,4 @@
+hello this is a sample data for the ai pipeline project 
+this is the second line 
+is this printed out right
+i forgot my english so excuse me for bad english
