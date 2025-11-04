@@ -54,5 +54,29 @@ class Preprocessor(PipelineStep):
         """ 
         Applies cleaning steps to each string in the input list. 
         """ 
-        return [re.sub(r"\s{2,}"," ",self.punctuation_pattern.sub("",line.strip().lower())) for line in data]
+        try:
+            return [re.sub(r"\s{2,}"," ",self.punctuation_pattern.sub("",line.strip().lower())) for line in data]
+        except Exception as e:
+            print(f"Unexpected error: {e}")
+            exit()
+
+class Analyzer(PipelineStep): 
+    """ 
+    Analyzes the text data to compute basic statistics. 
+    """ 
+    def process(self, data: List[str]) -> dict: 
+        """ 
+        Calculates total lines, average words per line, and number of 
+        unique words. 
+        """ 
+        statistics = {}
+        statistics["total_lines"] = len(data)
+        words = " ".join(data).split(sep=" ")
+        try:
+            statistics["avg_length"] = len(words)/statistics["total_lines"]
+        except ZeroDivisionError:
+            print("empty file")
+            exit()
+        statistics["unique_words"] = len(set(words))
         
+        return statistics
